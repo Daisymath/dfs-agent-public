@@ -56,6 +56,6 @@ st.subheader("📬 Contact")
 st.markdown("""
 **Gary Bolduc**  
 💼 Data Analyst | AI Enthusiast
-🌐 [www.garybolduc.com](https://www.garybolduc.com)  
-🔗 [LinkedIn](https://www.linkedin.com/in/garybolduc) | [GitHub](https://github.com/garybolduc)
+🌐 [www.garybolduc.com](https://garybolduc.com/)  
+🔗 [LinkedIn](https://www.linkedin.com/in/gary-bolduc-67995ab8/) | [GitHub](https://github.com/Daisymath)
 """)
