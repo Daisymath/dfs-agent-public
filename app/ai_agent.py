@@ -14,7 +14,7 @@ def generate_sql_from_user_input(user_query: str) -> str:
     prompt = f"{schema_prompt}\n\nUser question: {user_query}"
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-pro",
         contents=prompt
     )
 

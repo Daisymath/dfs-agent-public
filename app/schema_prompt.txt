@@ -52,8 +52,16 @@ defense_vs_position(
     week,          -- NFL week
     total_fpts_allowed  -- total fantasy points allowed by this defense that week
 )
-
 This view is pre-joined and aggregated by defense team, so you can quickly find which defenses allow the most or fewest fantasy points to certain positions.
+
+
+defense_vs_team_position(
+    defense_team, -- team playing defense
+    position, -- offensive position being analyzed
+    avg_ratio_vs_team_pos, -- Average ratio of fantasy points allowed versus the opponent team’s typical production at that position. Values >1 mean the defense allows more than expected; <1 means better than average.
+    weeks_tracked --number of weeks of data for each defense
+)
+This view is an aggregated defensive performance by position, comparing each defense’s weekly points allowed to how strong that opponent’s team-position group typically is.
 
 Notes:
 - The current week for DFS is the latest week of available dfs lineup data.
