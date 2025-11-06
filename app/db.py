@@ -1,5 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine, event, text
 import streamlit as st
 
 pg = st.secrets.get("postgres", {})
@@ -37,3 +37,10 @@ def safe_execute_query(sql_query):
     with engine.connect() as conn:
         df = pd.read_sql_query(sql_query, conn)
     return df
+
+def get_latest_week(table_name):
+    query = text(f"SELECT MAX(week) AS latest_week FROM {table_name};")
+    with engine.connect() as conn:
+        result = conn.execute(query).scalar()
+    return result if result else "N/A"
+

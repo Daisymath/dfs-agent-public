@@ -1,14 +1,28 @@
 import streamlit as st
 from app.ai_agent import generate_sql_from_user_input
-from app.db import safe_execute_query
+from app.db import safe_execute_query, get_latest_week, get_engine
 from app.utils import log_interaction
+
+##Get the latest week of data
+latest_weekly = get_latest_week("weekly_master")
+latest_dfs = get_latest_week("dfs_raw_week")
 
 ##st.title("DFS Football AI Agent")
 st.set_page_config(page_title="AI Fantasy Football Data Agent", page_icon="🤖", layout="wide")
 
 
 st.title("🤖 AI Fantasy Football Data Agent")
-st.markdown("### Ask questions about your fantasy football and DFS data!")
+st.markdown("### Ask questions about fantasy football and DFS data!")
+
+st.markdown(
+    f"""
+    ### 🗓️ Current Data State  
+    **Weekly Data:** Week {latest_weekly}  
+    **DFS Data:** Week {latest_dfs}
+    """
+)
+
+
 
 with st.expander("📘 About this Agent"):
     st.markdown("""
@@ -19,8 +33,8 @@ with st.expander("📘 About this Agent"):
     - Returns a data table
     
     **Example questions:**
-    - “Who were the top 5 WRs by fantasy points last week?”
-    - “Which teams were the worst against running backs on average?”
+    - Who were the top 5 WRs by fantasy points last week?
+    - Which teams were the worst against running backs on average?
     - Can I get the top 10 players (no qbs) by their current week salary/ avg opportunities the last 3 weeks?  Make sure their avg is > 1 and the lower the better!
     """)
 
@@ -38,11 +52,12 @@ if st.button("Run AI Query") and user_query.strip():
         else:
             st.subheader("Generated SQL")
             st.code(sql_query)
-
+            engine = get_engine()
             try:
                 df = safe_execute_query(sql_query)
                 st.subheader("Results")
                 st.dataframe(df)
+
             except Exception as e:
                 log_interaction(user_query + " sql query: " + sql_query, f"Blocked query: {e}, safety_check")
                 st.error(f"Query failed safety check: {e}")
@@ -55,7 +70,8 @@ st.divider()
 st.subheader("📬 Contact")
 st.markdown("""
 **Gary Bolduc**  
-💼 Data Analyst | AI Enthusiast
+💼 Data Analyst | AI Enthusiast  
+📧 [gbolduc2718@gmail.com](mailto:gbolduc2718@gmail.com)  
 🌐 [www.garybolduc.com](https://garybolduc.com/)  
 🔗 [LinkedIn](https://www.linkedin.com/in/gary-bolduc-67995ab8/) | [GitHub](https://github.com/Daisymath)
 """)

@@ -13,6 +13,7 @@ def log_interaction(user_query, ai_response):
             writer.writerow(["timestamp", "query", "response"])
         writer.writerow([datetime.now().isoformat(), user_query, ai_response])
 
+
 def clean_sql_output(ai_response_text: str) -> str:
     """Remove code fences or prefixes from AI SQL output."""
     sql = ai_response_text.lstrip().removeprefix("sql").strip()
